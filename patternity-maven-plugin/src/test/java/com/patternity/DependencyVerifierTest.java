@@ -7,7 +7,7 @@ import java.util.Collections;
 
 import org.junit.Test;
 
-public class TestDependencyVerifierTest {
+public class DependencyVerifierTest {
 
 	@Test
 	public void entityMayKnowvalueObject() throws Exception {
