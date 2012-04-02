@@ -1,5 +1,7 @@
+[![][logo]][website]
+
 Patternity
-==========
+--------
 
 Declare design intents in your code, and let tools automate your work
 
@@ -34,3 +36,8 @@ Patternity is licenced under the Apache Software Licence v2.0.
 See http://www.apache.org/licenses/LICENSE-2.0 for the text of the licence.
 
 Please feel free to contribute and use it.
+
+
+[logo]: https://github.com/cyriux/Patternity/raw/master/patternity-maven-plugin/logo.png
+[website]: https://github.com/cyriux/Patternity
+
