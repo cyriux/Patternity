@@ -9,7 +9,7 @@ Abstract
 
 Declare all your design decisions (class stereotypes, responsibility layers, patterns...) in your code using annotations. 
 
-Tools can then exploit these design declaration to perform code checks and verify allowed dependency according to predefined rules. Tools may also extract more to the point design documents, among other things.
+Tools can then exploit these design declaration to perform code checks and verify allowed dependency according to predefined rules. Tools may also extract acccurate design documents, among other things.
 
 Features
 --------
