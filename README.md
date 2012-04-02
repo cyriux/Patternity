@@ -38,6 +38,6 @@ See http://www.apache.org/licenses/LICENSE-2.0 for the text of the licence.
 Please feel free to contribute and use it.
 
 
-[logo]: https://github.com/cyriux/Patternity/raw/master/patternity-maven-plugin/logo.png
+[logo]: https://github.com/cyriux/Patternity/raw/master/logo.png
 [website]: https://github.com/cyriux/Patternity
 
