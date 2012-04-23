@@ -1,22 +1,24 @@
 # Expression/Language
 
-## Category 
+## Category (aka Tag)
 
 Categories are used to categorize classes!
 This categorization allows, for example, to indicate if:
 
-* a class is an `entity`, a `value_object`, a `dao` (Data Access Object)...
-* a specific component of a design pattern such as a `view` or a `controller` ...
-* a member of a specific "technical" layer such as `domain`, `infrastructure`, `presentation`...
+Individually
+* Stereotypes: a class is an `entity`, a `value_object`, a `dao` (Data Access Object)... This is a IS-A kind of relation that is intrinsic and always true
+* Role: a specific component of a design pattern such as a `view` or a `controller` ... This is a HAS-ROLE kind of relation as part of a bigger construct like a pattern.
+* a member of a specific "technical" layer such as `domain`, `infrastructure`, `presentation`... 
 * or a member of a specific "business" layer such as `billing`, `planning`, ...
 * ...
+
 
 Category allows to define specific selector in the Patternity bounded context. 
 Each class can belongs to zero, one or more categories. 
 
-### Annotation
+### Annotation at type level
 
-A category can be define by annotation, that is a class belongs to the category if it has the corresponding annotation at its type level.
+A category can be defined by annotation, that is a class belongs to the category if it has the corresponding annotation at its type level.
 
 ```json
 categories {
@@ -26,7 +28,24 @@ categories {
 }
 ```
 
-### Member of a package
+### Annotation at package level
+
+We can also use annotations at package level, with the semantics that if a package is annotated then every element in the package are implicitly annotated too (ModuleWise-ness)
+
+### At projet level
+
+At projet level, a single magic file at the root is enough to describe project-wise semantics on the projet:
+
+```
+Preferred Styles {
+	"@com.patternity.annotation.style.FunctionalFirst",
+        "@com.patternity.annotation.style.ObjectOriented",
+   	"@com.patternity.annotation.style.Declarative"
+}
+```
+
+
+### Member of a package by package name
 
 ```json
 categories {
