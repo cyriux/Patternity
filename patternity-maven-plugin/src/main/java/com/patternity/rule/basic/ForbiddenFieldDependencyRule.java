@@ -3,14 +3,14 @@ package com.patternity.rule.basic;
 import com.patternity.ast.ClassElement;
 import com.patternity.ast.FieldElement;
 import com.patternity.ast.ModelRepository;
-import com.patternity.rule.ClassRule;
+import com.patternity.rule.Rule;
 import com.patternity.rule.RuleContext;
 
 /**
  * A rule that verifies that classes marked by the 'source' tag must not have
  * any persistent reference to any classes marked by the 'target' tag
  */
-public class ForbiddenFieldDependencyRule implements ClassRule {
+public class ForbiddenFieldDependencyRule implements Rule {
 
 	private final String sourceTag;
 	private final String targetTag;
@@ -20,12 +20,12 @@ public class ForbiddenFieldDependencyRule implements ClassRule {
 	public ForbiddenFieldDependencyRule(String sourceTag, String targetTag) {
 		this.sourceTag = sourceTag;
 		this.targetTag = targetTag;
-		toString = "ForbiddenDependencyRule from: " + sourceTag + " to: " + targetTag;
+		toString = "ForbiddenFieldDependencyRule from: " + sourceTag + " to: " + targetTag;
 	}
 
 	@Override
 	public void validate(ClassElement classElement, RuleContext context) {
-		if (!context.isMarked(classElement, sourceTag))
+		if (!isElligible(classElement, context))
 			return;
 
 		final StringBuilder forbiddenReferences = new StringBuilder();
@@ -43,10 +43,13 @@ public class ForbiddenFieldDependencyRule implements ClassRule {
 		}
 	}
 
+	protected boolean isElligible(ClassElement classElement, RuleContext context) {
+		return context.isMarked(classElement, sourceTag);
+	}
+
 	private final static ClassElement typeOf(FieldElement field, RuleContext context) {
-		final ModelRepository repository = context.getModelRepository();
 		for (String qualifiedName : field.getDependencies()) {
-			ClassElement fieldType = repository.findModel(qualifiedName);
+			ClassElement fieldType = context.findModel(qualifiedName);
 			return fieldType;
 		}
 		return null;

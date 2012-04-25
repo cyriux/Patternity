@@ -17,11 +17,9 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.patternity.ast.ClassElement;
-import com.patternity.ast.ModelRepository;
 import com.patternity.ast.PackageElement;
 import com.patternity.data.domain.Epic6KnowsItsInfra;
 import com.patternity.data.infra.JdbcEpicRepository;
-import com.patternity.rule.Configuration;
 import com.patternity.rule.RuleContext;
 import com.patternity.usecase.Usecases;
 
@@ -29,16 +27,10 @@ public class ForbiddenFieldDependencyRuleTest {
 
 	private ForbiddenFieldDependencyRule rule = new ForbiddenFieldDependencyRule("MyDomainModel", "InfraLayer");
 	private RuleContext context;
-	private Configuration configuration;
-	private ModelRepository modelRepository;
 
 	@Before
 	public void setUp() {
 		context = Mockito.mock(RuleContext.class);
-		configuration = Mockito.mock(Configuration.class);
-		modelRepository = Mockito.mock(ModelRepository.class);
-		when(context.getConfiguration()).thenReturn(configuration);
-		when(context.getModelRepository()).thenReturn(modelRepository);
 	}
 
 	@Test
@@ -55,7 +47,7 @@ public class ForbiddenFieldDependencyRuleTest {
 		final ClassElement repo = Usecases.scanClass(JdbcEpicRepository.class);
 
 		when(context.isMarked(same(epic6), same("MyDomainModel"))).thenReturn(true);
-		when(modelRepository.findModel("com/patternity/data/infra/JdbcEpicRepository")).thenReturn(repo);
+		when(context.findModel("com/patternity/data/infra/JdbcEpicRepository")).thenReturn(repo);
 		when(context.isMarked(same(repo), same("InfraLayer"))).thenReturn(true);
 
 		rule.validate(epic6, context);

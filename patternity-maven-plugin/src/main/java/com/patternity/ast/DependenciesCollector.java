@@ -11,7 +11,7 @@ public class DependenciesCollector extends ModelVisitor {
 
 	@Override
 	public void enterModel(ModelElement<?> model) {
-		Set<String> modelDependencies = model.getDependencies();
+		final Set<String> modelDependencies = model.getDependencies();
 		if (modelDependencies != null)
 			dependencies.addAll(modelDependencies);
 	}
