@@ -1,10 +1,11 @@
 package com.patternity.ast.asm;
 
 import com.patternity.ClassWithDependencies;
-import com.patternity.ast.AnnotationModel;
+import com.patternity.ast.AnnotationElement;
 import com.patternity.ast.ClassHandler;
-import com.patternity.ast.ClassModel;
-import com.patternity.ast.FieldModel;
+import com.patternity.ast.ClassElement;
+import com.patternity.ast.DependenciesCollector;
+import com.patternity.ast.FieldElement;
 import com.patternity.data.domain.*;
 import com.patternity.data.service.RepositoryBase;
 import com.patternity.data.service.StoryRepository;
@@ -15,6 +16,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -30,13 +32,13 @@ public class DataUseCasesTest {
     private InputStream stream;
 
     // Collected during tests
-    private ClassModel scannedClass;
+    private ClassElement scannedClass;
 
     @Before
     public void setUp() {
         handler = new ClassHandler() {
             @Override
-            public void handleClass(ClassModel model) {
+            public void handleClass(ClassElement model) {
                 scannedClass = model;
             }
         };
@@ -187,11 +189,11 @@ public class DataUseCasesTest {
     public void user2_fieldDependencies() throws IOException {
         new AsmScanner().scan(openStreamOf(User2.class), handler);
 
-        List<FieldModel> fieldModels = scannedClass.getFieldModels();
+        List<FieldElement> fieldModels = scannedClass.getFields();
         assertThat(fieldModels, notNullValue());
         assertThat(fieldModels.size(), equalTo(1));
 
-        FieldModel fieldModel = fieldModels.get(0);
+        FieldElement fieldModel = fieldModels.get(0);
         assertThat(fieldModel, notNullValue());
         assertThat(fieldModel.getFieldName(), equalTo("userId1"));
         assertThat(fieldModel.getDependencies(), containsInAnyOrder("com/patternity/data/domain/UserId1"));
@@ -214,11 +216,11 @@ public class DataUseCasesTest {
         new AsmScanner().scan(openStreamOf(UserId1.class), handler);
         assertThat(scannedClass, notNullValue());
 
-        List<AnnotationModel> annotationModels = scannedClass.getAnnotationModels();
+        List<AnnotationElement> annotationModels = scannedClass.getAnnotations();
         assertThat(annotationModels, notNullValue());
         assertThat(annotationModels.size(), equalTo(1));
 
-        AnnotationModel annotationModel = annotationModels.get(0);
+        AnnotationElement annotationModel = annotationModels.get(0);
         assertThat(annotationModel.getQualifiedName(), equalTo("com/patternity/data/annotation/ValueObject"));
     }
 
@@ -262,7 +264,10 @@ public class DataUseCasesTest {
     }
 
     private void assertThatAllDependenciesMatch(String... dependencies) {
-        assertThat(scannedClass.collectAllDependencies(), containsInAnyOrder(dependencies));
+        final DependenciesCollector collector = new DependenciesCollector();
+		scannedClass.traverseModelTree(collector);
+		final Set<String> allDependencies = collector.getDependencies();
+		assertThat(allDependencies, containsInAnyOrder(dependencies));
     }
 
     private InputStream openStreamOf(Class<?> clazz) {

@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  *
  */
 @Documented
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.CLASS)
 @Target(ElementType.TYPE)
 public @interface ValueObject {
 }

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  *
  */
-public class ClassModel extends Model<ClassModel> {
+public class ClassModel extends ModelElement<ClassModel> {
     private final String qualifiedName;
     private String outerClassName;
     private String superQualifiedName;

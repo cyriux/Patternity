@@ -24,7 +24,7 @@ public class Usecases {
         return "/" + clazz.getName().replace('.', '/') + classNameSuffix + ".class";
     }
 
-    public static ClassModel scanClass(Class<?> type) throws IOException {
+    public static ClassElement scanClass(Class<?> type) throws IOException {
         String resourceName = formatResourceName(type);
         InputStream stream = openStreamOf(resourceName);
 
@@ -61,7 +61,7 @@ public class Usecases {
     private static ClassHandler repositoryClassHandler(final ModelRepository repository) {
         return new ClassHandler() {
             @Override
-            public void handleClass(ClassModel model) {
+            public void handleClass(ClassElement model) {
                 repository.add(model);
             }
         };

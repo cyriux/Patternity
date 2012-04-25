@@ -1,6 +1,6 @@
 package com.patternity.ast.asm;
 
-import com.patternity.ast.AnnotationModel;
+import com.patternity.ast.AnnotationElement;
 import com.patternity.ast.Modifiers;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -10,9 +10,9 @@ import org.objectweb.asm.Type;
  */
 public class AsmUtils {
 
-    public static AnnotationModel createAnnotationFromDesc(String desc, boolean visibleAtRuntime) {
+    public static AnnotationElement createAnnotationFromDesc(String desc, boolean visibleAtRuntime) {
         String annotationType = Type.getType(desc).getInternalName();
-        AnnotationModel model = new AnnotationModel(annotationType, visibleAtRuntime);
+        AnnotationElement model = new AnnotationElement(annotationType, visibleAtRuntime);
         return model;
     }
 

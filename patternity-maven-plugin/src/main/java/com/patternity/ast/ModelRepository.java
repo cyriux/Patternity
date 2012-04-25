@@ -6,9 +6,9 @@ import com.patternity.util.Visitor;
  *
  */
 public interface ModelRepository {
-    void add(ClassModel model);
+    void add(ClassElement model);
 
-    ClassModel findModel(String qualifiedName);
+    ClassElement findModel(String qualifiedName);
 
-    void traverseModels(Visitor<ClassModel> visitor);
+    void traverseModels(Visitor<ClassElement> visitor);
 }

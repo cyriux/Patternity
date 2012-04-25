@@ -1,7 +1,7 @@
 package com.patternity.rule;
 
 import com.patternity.AnalysisLogger;
-import com.patternity.ast.ClassModel;
+import com.patternity.ast.ClassElement;
 import com.patternity.ast.ModelRepository;
 
 /**

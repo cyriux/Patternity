@@ -1,6 +1,6 @@
 package com.patternity.rule;
 
-import com.patternity.ast.ClassModel;
+import com.patternity.ast.ClassElement;
 
 /**
  *
@@ -18,11 +18,11 @@ public class Configuration {
         this.entityAnnotation = entityAnnotation;
     }
 
-    public boolean isValueObject(ClassModel classModel) {
+    public boolean isValueObject(ClassElement classModel) {
         return classModel.hasAnnotation(valueObjectAnnotation);
     }
 
-    public boolean isEntity(ClassModel classModel) {
+    public boolean isEntity(ClassElement classModel) {
         return classModel.hasAnnotation(entityAnnotation);
     }
 }

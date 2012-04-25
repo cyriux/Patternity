@@ -1,6 +1,6 @@
 package com.patternity.ast.asm;
 
-import com.patternity.ast.AnnotationModel;
+import com.patternity.ast.AnnotationElement;
 import org.objectweb.asm.*;
 
 /**
@@ -22,14 +22,14 @@ public class MethodVisitorAdapter implements MethodVisitor {
     @Override
     public AnnotationVisitor visitAnnotation(final String desc, final boolean visibleAtRuntime) {
         context.addDesc(desc);
-        AnnotationModel model = AsmUtils.createAnnotationFromDesc(desc, visibleAtRuntime);
+        AnnotationElement model = AsmUtils.createAnnotationFromDesc(desc, visibleAtRuntime);
         return context.enterMethodAnnotation(model);
     }
 
     @Override
     public AnnotationVisitor visitParameterAnnotation(final int parameter, final String desc, final boolean visibleAtRuntime) {
         context.addDesc(desc);
-        AnnotationModel model = new AnnotationModel(desc, visibleAtRuntime);
+        AnnotationElement model = new AnnotationElement(desc, visibleAtRuntime);
         return context.enterMethodParameterAnnotation(model);
     }
 

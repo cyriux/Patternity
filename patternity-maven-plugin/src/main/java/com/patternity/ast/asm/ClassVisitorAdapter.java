@@ -1,8 +1,8 @@
 package com.patternity.ast.asm;
 
-import com.patternity.ast.AnnotationModel;
-import com.patternity.ast.ClassModel;
-import com.patternity.ast.FieldModel;
+import com.patternity.ast.AnnotationElement;
+import com.patternity.ast.ClassElement;
+import com.patternity.ast.FieldElement;
 import com.patternity.ast.MethodModel;
 import org.objectweb.asm.*;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class ClassVisitorAdapter implements ClassVisitor {
 
         logger.info("Visiting class <{}> sig: <{}>", name, signature);
 
-        ClassModel model = new ClassModel(name);
+        ClassElement model = new ClassElement(name);
         AsmUtils.applyModifiers(model.getModifiers(), access);
         model.declareImplements(interfaces);
         model.setSuperQualifiedName(superName);
@@ -46,7 +46,7 @@ public class ClassVisitorAdapter implements ClassVisitor {
     public AnnotationVisitor visitAnnotation(final String desc, final boolean visibleAtRuntime) {
         logger.debug("Visiting class annotation <{}>", desc);
 
-        AnnotationModel model = AsmUtils.createAnnotationFromDesc(desc, visibleAtRuntime);
+        AnnotationElement model = AsmUtils.createAnnotationFromDesc(desc, visibleAtRuntime);
         AnnotationVisitor annotationVisitor = context.enterClassAnnotation(model);
 
         // define dependency once annotation model is the current model (top of the stack)
@@ -63,7 +63,7 @@ public class ClassVisitorAdapter implements ClassVisitor {
                                    final Object value) {
         logger.debug("Visiting class field <{}> <{}>", name, desc);
 
-        FieldModel model = new FieldModel(name);
+        FieldElement model = new FieldElement(name);
         AsmUtils.applyModifiers(model.getModifiers(), access);
 
         FieldVisitor fieldVisitor = context.enterField(model);
@@ -106,7 +106,7 @@ public class ClassVisitorAdapter implements ClassVisitor {
 
     @Override
     public void visitInnerClass(final String name, final String outerName, final String innerName, final int access) {
-        ClassModel classModel = (ClassModel) context.peek();
+        ClassElement classModel = (ClassElement) context.peek();
         logger.debug("Visiting inner class field outerName: <{}> ({})", outerName, classModel);
         // addName( outerName);
         // addName( innerName);
@@ -114,7 +114,7 @@ public class ClassVisitorAdapter implements ClassVisitor {
 
     @Override
     public void visitOuterClass(final String owner, final String name, final String desc) {
-        ClassModel classModel = (ClassModel) context.peek();
+        ClassElement classModel = (ClassElement) context.peek();
         classModel.innerClassOf(owner);
         logger.debug("Visiting outer class field owner: <{}> ({})", owner, classModel);
         // addName(owner);

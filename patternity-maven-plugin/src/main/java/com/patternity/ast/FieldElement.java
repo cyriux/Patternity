@@ -1,13 +1,12 @@
 package com.patternity.ast;
 
 /**
- *
+ * Represents a field in the metamodel
  */
-public class FieldModel extends ModelElement<FieldModel> {
+public class FieldElement extends ModelElement<FieldElement> {
     private final String name;
 
-    public FieldModel(String name) {
-        super();
+    public FieldElement(String name) {
         this.name = name;
     }
 

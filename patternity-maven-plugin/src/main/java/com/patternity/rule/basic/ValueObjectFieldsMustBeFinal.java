@@ -1,7 +1,7 @@
 package com.patternity.rule.basic;
 
-import com.patternity.ast.ClassModel;
-import com.patternity.ast.FieldModel;
+import com.patternity.ast.ClassElement;
+import com.patternity.ast.FieldElement;
 import com.patternity.rule.ClassRule;
 import com.patternity.rule.RuleContext;
 
@@ -11,12 +11,12 @@ import com.patternity.rule.RuleContext;
 public class ValueObjectFieldsMustBeFinal implements ClassRule {
 
     @Override
-    public void validate(ClassModel classModel, RuleContext context) {
+    public void validate(ClassElement classModel, RuleContext context) {
         if (!isElligibleToRule(classModel, context))
             return;
 
         StringBuilder nonFinalFields = new StringBuilder();
-        for (FieldModel model : classModel.getFieldModels()) {
+        for (FieldElement model : classModel.getFields()) {
             if (!model.getModifiers().isFinal() && !model.getModifiers().isStatic()) {
                 nonFinalFields.append(model.getFieldName()).append(", ");
             }
@@ -28,7 +28,7 @@ public class ValueObjectFieldsMustBeFinal implements ClassRule {
         }
     }
 
-    private boolean isElligibleToRule(ClassModel classModel, RuleContext context) {
+    private boolean isElligibleToRule(ClassElement classModel, RuleContext context) {
         return context.getConfiguration().isValueObject(classModel);
     }
 

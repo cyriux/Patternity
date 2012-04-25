@@ -1,20 +1,19 @@
 package com.patternity.ast;
 
-import java.util.List;
 
 /**
  *
  */
 public class ClassHandlerCollector implements ClassHandler {
 
-    private ClassModel collected;
+    private ClassElement collected;
 
     @Override
-    public void handleClass(ClassModel model) {
+    public void handleClass(ClassElement model) {
         this.collected = model;
     }
 
-    public ClassModel getCollected() {
+    public ClassElement getCollected() {
         return collected;
     }
 }

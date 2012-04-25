@@ -20,7 +20,7 @@ public class ScannerContext {
     private static Logger logger = LoggerFactory.getLogger(ScannerContext.class);
 
 
-    private final Stack<Model> stack = new Stack<Model>();
+    private final Stack<ModelElement> stack = new Stack<ModelElement>();
     private String scannedClass;
     //
     private ClassVisitorAdapter classVisitor;
@@ -60,29 +60,29 @@ public class ScannerContext {
         return methodVisitor;
     }
 
-    private ClassModel peekClassModel() {
-        return (ClassModel) peek();
+    private ClassElement peekClassModel() {
+        return (ClassElement) peek();
     }
 
-    public Model peek() {
-        Model model = stack.peek();
+    public ModelElement peek() {
+        ModelElement model = stack.peek();
         logger.trace("Peeking from stack: <{}>", model);
         return model;
     }
 
-    public Model pop() {
-        Model model = stack.pop();
+    public ModelElement pop() {
+        ModelElement model = stack.pop();
         logger.debug("Popping from stack: <{}> (remaining {})", model, stack.size());
 
         // only notify root class
         if (stack.empty()) {
-            ClassModel classModel = (ClassModel) model;
+            ClassElement classModel = (ClassElement) model;
             classHandler.handleClass(classModel);
         }
         return model;
     }
 
-    public void push(Model model) {
+    public void push(ModelElement model) {
         logger.debug("Pushing to stack: <{}>", model);
         stack.push(model);
     }
@@ -158,42 +158,42 @@ public class ScannerContext {
         }
     }
 
-    public void enterClass(ClassModel model) {
+    public void enterClass(ClassElement model) {
         push(model);
         this.scannedClass = model.getQualifiedName();
     }
 
-    public FieldVisitor enterField(FieldModel model) {
-        peekClassModel().addFieldModel(model);
+    public FieldVisitor enterField(FieldElement model) {
+        peekClassModel().addField(model);
         push(model);
         return getFieldVisitor();
     }
 
     public MethodVisitor enterMethod(MethodModel model) {
-        peekClassModel().addMethodModel(model);
+        peekClassModel().addMethod(model);
         push(model);
         return getMethodVisitor();
     }
 
-    protected AnnotationVisitor enterAnnotation(AnnotationModel model) {
+    protected AnnotationVisitor enterAnnotation(AnnotationElement model) {
         peek().addAnnotation(model);
         push(model);
         return getAnnotationVisitor();
     }
 
-    public AnnotationVisitor enterClassAnnotation(AnnotationModel model) {
+    public AnnotationVisitor enterClassAnnotation(AnnotationElement model) {
         return enterAnnotation(model);
     }
 
-    public AnnotationVisitor enterMethodAnnotation(AnnotationModel model) {
+    public AnnotationVisitor enterMethodAnnotation(AnnotationElement model) {
         return enterAnnotation(model);
     }
 
-    public AnnotationVisitor enterFieldAnnotation(AnnotationModel model) {
+    public AnnotationVisitor enterFieldAnnotation(AnnotationElement model) {
         return enterAnnotation(model);
     }
 
-    public AnnotationVisitor enterMethodParameterAnnotation(AnnotationModel model) {
+    public AnnotationVisitor enterMethodParameterAnnotation(AnnotationElement model) {
         return enterAnnotation(model);
     }
 

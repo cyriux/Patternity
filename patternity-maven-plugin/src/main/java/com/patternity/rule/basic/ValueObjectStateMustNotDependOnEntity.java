@@ -17,12 +17,12 @@ public class ValueObjectStateMustNotDependOnEntity implements ClassRule {
     private static final Logger logger = LoggerFactory.getLogger(ValueObjectStateMustNotDependOnEntity.class);
 
     @Override
-    public void validate(ClassModel classModel, RuleContext context) {
+    public void validate(ClassElement classModel, RuleContext context) {
         if (!isElligibleToRule(classModel, context))
             return;
 
         StringBuilder invalidFields = new StringBuilder();
-        for (FieldModel model : classModel.getFieldModels()) {
+        for (FieldElement model : classModel.getFields()) {
             DependOnEntityVisitor visitor = new DependOnEntityVisitor(context);
             visitor.enterModel(model);
             if (visitor.isInvalid())
@@ -34,7 +34,7 @@ public class ValueObjectStateMustNotDependOnEntity implements ClassRule {
         }
     }
 
-    private boolean isElligibleToRule(ClassModel classModel, RuleContext context) {
+    private boolean isElligibleToRule(ClassElement classModel, RuleContext context) {
         return context.getConfiguration().isValueObject(classModel);
     }
 
@@ -48,18 +48,18 @@ public class ValueObjectStateMustNotDependOnEntity implements ClassRule {
         }
 
         @Override
-        public void enterModel(Model<?> model) {
+        public void enterModel(ModelElement<?> model) {
             logger.debug("Analysing {}", model);
 
             switch (model.getModelType()) {
                 case ANNOTATION:
-                    isInvalid |= dependOnEntity((AnnotationModel) model);
+                    isInvalid |= dependOnEntity((AnnotationElement) model);
                     break;
                 case FIELD:
-                    isInvalid |= dependOnEntity((FieldModel) model);
+                    isInvalid |= dependOnEntity((FieldElement) model);
                     break;
                 case CLASS:
-                    ClassModel classModel = (ClassModel) model;
+                    ClassElement classModel = (ClassElement) model;
                     // prevent re-entrant case
                     if (!traversed.add(classModel.getQualifiedName()))
                         return;
@@ -80,34 +80,34 @@ public class ValueObjectStateMustNotDependOnEntity implements ClassRule {
             return isInvalid;
         }
 
-        private boolean dependOnEntity(ClassModel model) {
+        private boolean dependOnEntity(ClassElement model) {
             if (context.getConfiguration().isEntity(model))
                 return true;
             if (directDepencyOnEntity(model))
                 return true;
-            for (FieldModel fieldModel : model.getFieldModels()) {
+            for (FieldElement fieldModel : model.getFields()) {
                 enterModel(fieldModel);
             }
             return false;
         }
 
-        private boolean dependOnEntity(AnnotationModel model) {
+        private boolean dependOnEntity(AnnotationElement model) {
             if (directDepencyOnEntity(model))
                 return true;
             return false;
         }
 
-        private boolean dependOnEntity(FieldModel model) {
+        private boolean dependOnEntity(FieldElement model) {
             if (directDepencyOnEntity(model))
                 return true;
             return false;
         }
 
-        private boolean directDepencyOnEntity(Model<?> model) {
+        private boolean directDepencyOnEntity(ModelElement<?> model) {
             RuleContext context = getContext();
             ModelRepository repository = context.getModelRepository();
             for (String qualifiedName : model.getDependencies()) {
-                ClassModel oModel = repository.findModel(qualifiedName);
+                ClassElement oModel = repository.findModel(qualifiedName);
                 if (oModel != null) {
                     enterModel(oModel);
                     if (isDone())

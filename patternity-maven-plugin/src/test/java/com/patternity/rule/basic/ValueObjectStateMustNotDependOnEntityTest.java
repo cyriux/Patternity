@@ -1,6 +1,6 @@
 package com.patternity.rule.basic;
 
-import com.patternity.ast.ClassModel;
+import com.patternity.ast.ClassElement;
 import com.patternity.ast.ModelRepository;
 import com.patternity.data.annotation.Entity;
 import com.patternity.data.annotation.ValueObject;
@@ -41,7 +41,7 @@ public class ValueObjectStateMustNotDependOnEntityTest {
 
     @Test
     public void ruleIsVerified_noDependencyNoFields() throws IOException {
-        ClassModel classModel = Usecases.scanClass(VO1_noDependencyNoFields.class);
+        ClassElement classModel = Usecases.scanClass(VO1_noDependencyNoFields.class);
         when(configuration.isValueObject(same(classModel))).thenReturn(true);
 
         rule.validate(classModel, context);
@@ -51,7 +51,7 @@ public class ValueObjectStateMustNotDependOnEntityTest {
 
     @Test
     public void ruleIsVerified_noDependency() throws IOException {
-        ClassModel classModel = Usecases.scanClass(VO1_noDependency.class);
+        ClassElement classModel = Usecases.scanClass(VO1_noDependency.class);
         when(configuration.isValueObject(same(classModel))).thenReturn(true);
 
         rule.validate(classModel, context);
@@ -63,8 +63,8 @@ public class ValueObjectStateMustNotDependOnEntityTest {
 
     @Test
     public void ruleIsNotVerified_fieldDependency() throws IOException {
-        ClassModel classModelVO = Usecases.scanClass(VO1_withDependencyInField.class);
-        ClassModel classModelEN = Usecases.scanClass(E1.class);
+        ClassElement classModelVO = Usecases.scanClass(VO1_withDependencyInField.class);
+        ClassElement classModelEN = Usecases.scanClass(E1.class);
         when(configuration.isValueObject(same(classModelVO))).thenReturn(true);
         when(configuration.isEntity(same(classModelEN))).thenReturn(true);
         when(modelRepository.findModel("com/patternity/rule/basic/ValueObjectStateMustNotDependOnEntityTest$E1")).thenReturn(classModelEN);
@@ -76,9 +76,9 @@ public class ValueObjectStateMustNotDependOnEntityTest {
 
     @Test
     public void ruleIsNotVerified_indirectFieldDependency() throws IOException {
-        ClassModel classModel = Usecases.scanClass(VO1_withDependencyIndirectFieldType.class);
-        ClassModel classModelRF = Usecases.scanClass(Ref.class);
-        ClassModel classModelEN = Usecases.scanClass(E1.class);
+        ClassElement classModel = Usecases.scanClass(VO1_withDependencyIndirectFieldType.class);
+        ClassElement classModelRF = Usecases.scanClass(Ref.class);
+        ClassElement classModelEN = Usecases.scanClass(E1.class);
         when(configuration.isValueObject(same(classModel))).thenReturn(true);
         when(configuration.isEntity(same(classModelRF))).thenReturn(false);
         when(configuration.isEntity(same(classModelEN))).thenReturn(true);

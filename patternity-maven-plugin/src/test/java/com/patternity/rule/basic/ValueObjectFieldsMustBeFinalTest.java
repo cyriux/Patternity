@@ -1,6 +1,6 @@
 package com.patternity.rule.basic;
 
-import com.patternity.ast.ClassModel;
+import com.patternity.ast.ClassElement;
 import com.patternity.data.annotation.ValueObject;
 import com.patternity.rule.Configuration;
 import com.patternity.rule.RuleContext;
@@ -37,7 +37,7 @@ public class ValueObjectFieldsMustBeFinalTest {
 
     @Test
     public void ruleIsNotVerified() throws IOException {
-        ClassModel classModel = Usecases.scanClass(VO1_nonFinalField.class);
+        ClassElement classModel = Usecases.scanClass(VO1_nonFinalField.class);
         when(configuration.isValueObject(same(classModel))).thenReturn(true);
 
         rule.validate(classModel, context);
@@ -48,7 +48,7 @@ public class ValueObjectFieldsMustBeFinalTest {
 
     @Test
     public void ruleIsVerified_finalField() throws IOException {
-        ClassModel classModel = Usecases.scanClass(VO2_finalField.class);
+        ClassElement classModel = Usecases.scanClass(VO2_finalField.class);
         when(configuration.isValueObject(same(classModel))).thenReturn(true);
 
         rule.validate(classModel, context);
@@ -59,7 +59,7 @@ public class ValueObjectFieldsMustBeFinalTest {
 
     @Test
     public void ruleIsVerified_finalField_nonFinalStatic() throws IOException {
-        ClassModel classModel = Usecases.scanClass(VO3_finalField_nonFinalStatic.class);
+        ClassElement classModel = Usecases.scanClass(VO3_finalField_nonFinalStatic.class);
         when(configuration.isValueObject(same(classModel))).thenReturn(true);
 
         rule.validate(classModel, context);
