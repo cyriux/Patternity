@@ -3,10 +3,10 @@ package com.patternity.ast;
 /**
  * Represents a method in the metamodel
  */
-public class MethodModel extends ModelElement<MethodModel> {
+public class MethodElement extends ModelElement<MethodElement> {
 	private final String name;
 
-	public MethodModel(String name) {
+	public MethodElement(String name) {
 		this.name = name;
 	}
 

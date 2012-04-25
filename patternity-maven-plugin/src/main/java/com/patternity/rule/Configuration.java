@@ -3,7 +3,7 @@ package com.patternity.rule;
 import com.patternity.ast.ClassElement;
 
 /**
- *
+ * Represents the configuration of 
  */
 public class Configuration {
 
@@ -18,11 +18,11 @@ public class Configuration {
         this.entityAnnotation = entityAnnotation;
     }
 
-    public boolean isValueObject(ClassElement classModel) {
-        return classModel.hasAnnotation(valueObjectAnnotation);
+    public boolean isValueObject(ClassElement classElement) {
+        return classElement.hasAnnotation(valueObjectAnnotation);
     }
 
-    public boolean isEntity(ClassElement classModel) {
-        return classModel.hasAnnotation(entityAnnotation);
+    public boolean isEntity(ClassElement classElement) {
+        return classElement.hasAnnotation(entityAnnotation);
     }
 }

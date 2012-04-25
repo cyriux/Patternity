@@ -1,84 +1,100 @@
 package com.patternity.usecase;
 
-import com.patternity.ast.*;
-import com.patternity.ast.asm.AsmScanner;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
+
+import com.patternity.ast.ClassElement;
+import com.patternity.ast.ClassHandler;
+import com.patternity.ast.ClassScanner;
+import com.patternity.ast.InMemoryModelRepository;
+import com.patternity.ast.ModelRepository;
+import com.patternity.ast.PackageElement;
+import com.patternity.ast.asm.AsmScanner;
 
 /**
  *
  */
 public class Usecases {
 
-    public static ClassScanner newScanner() {
-        return new AsmScanner();
-    }
+	public static ClassScanner newScanner() {
+		return new AsmScanner();
+	}
 
-    public static String formatResourceName(Class<?> clazz) {
-        return formatResourceName(clazz, "");
-    }
+	public static String formatResourceName(final Class<?> clazz) {
+		return toResourcePath(clazz.getName()) + ".class";
+	}
 
-    public static String formatResourceName(Class<?> clazz, String classNameSuffix) {
-        return "/" + clazz.getName().replace('.', '/') + classNameSuffix + ".class";
-    }
+	private static String toResourcePath(final String name) {
+		return "/" + name.replace('.', '/');
+	}
 
-    public static ClassElement scanClass(Class<?> type) throws IOException {
-        String resourceName = formatResourceName(type);
-        InputStream stream = openStreamOf(resourceName);
+	public static PackageElement scanPackage(final Class<?> type) throws IOException {
+		final String resourceName = toResourcePath(type.getPackage().getName()) + "/package-info.class";
+		final ClassElement clazz = scanClass(resourceName);
+		return new PackageElement(clazz.getQualifiedName(), clazz.getAnnotations());
+	}
 
-        try {
-            ClassHandlerCollector handler = new ClassHandlerCollector();
-            newScanner().scan(stream, handler);
-            return handler.getCollected();
-        } finally {
-            close(stream);
-        }
-    }
+	public static ClassElement scanClass(final Class<?> type) throws IOException {
+		return scanClass(formatResourceName(type));
+	}
 
+	private static ClassElement scanClass(final String resourceName) throws IOException {
+		return scanClass(openStreamOf(resourceName));
+	}
 
-    public static InMemoryModelRepository createAndFillRepository(
-            ClassScanner scanner,
-            Set<String> resourceNames) throws IOException {
-        InMemoryModelRepository repository = new InMemoryModelRepository();
-        scanResources(scanner, resourceNames, repository);
-        return repository;
-    }
+	private static ClassElement scanClass(final InputStream stream) throws IOException {
+		final SingleClassHandlerCollector handler = new SingleClassHandlerCollector();
+		final ClassScanner scanner = newScanner();
+		try {
+			scanner.scan(stream, handler);
+			return handler.getCollected();
+		} finally {
+			close(stream);
+		}
+	}
 
-    private static void scanResources(ClassScanner scanner, Set<String> resourceNames, ModelRepository repository) throws IOException {
-        ClassHandler handler = repositoryClassHandler(repository);
-        for (String resourceName : resourceNames) {
-            InputStream stream = openStreamOf(resourceName);
-            try {
-                scanner.scan(stream, handler);
-            } finally {
-                close(stream);
-            }
-        }
-    }
+	public static ModelRepository createAndFillRepository(ClassScanner scanner, Set<String> resourceNames)
+			throws IOException {
+		final ModelRepository repository = new InMemoryModelRepository();
+		scanResources(scanner, resourceNames, repository);
+		return repository;
+	}
 
-    private static ClassHandler repositoryClassHandler(final ModelRepository repository) {
-        return new ClassHandler() {
-            @Override
-            public void handleClass(ClassElement model) {
-                repository.add(model);
-            }
-        };
-    }
+	private static void scanResources(ClassScanner scanner, Set<String> resourceNames, ModelRepository repository)
+			throws IOException {
+		final ClassHandler handler = repositoryClassHandler(repository);
+		for (String resourceName : resourceNames) {
+			final InputStream stream = openStreamOf(resourceName);
+			try {
+				scanner.scan(stream, handler);
+			} finally {
+				close(stream);
+			}
+		}
+	}
 
-    private static void close(InputStream stream) {
-        if (stream == null)
-            return;
-        try {
-            stream.close();
-        } catch (IOException e) {
-            // ignore...
-        }
-    }
+	private static ClassHandler repositoryClassHandler(final ModelRepository repository) {
+		return new ClassHandler() {
+			@Override
+			public void handleClass(ClassElement model) {
+				repository.add(model);
+			}
+		};
+	}
 
-    private static InputStream openStreamOf(String resourceName) {
-        return Usecases.class.getResourceAsStream(resourceName);
-    }
+	private static void close(InputStream stream) {
+		if (stream == null)
+			return;
+		try {
+			stream.close();
+		} catch (IOException e) {
+			// ignore...
+		}
+	}
+
+	private static InputStream openStreamOf(String resourceName) {
+		return Usecases.class.getResourceAsStream(resourceName);
+	}
 
 }

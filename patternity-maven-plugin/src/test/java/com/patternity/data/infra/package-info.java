@@ -1,8 +1,8 @@
 /**
- * A dummy package 
+ * A dummy infrastructure package 
  */
 @InfraLayer
-package com.patternity.rule.basic;
+package com.patternity.data.infra;
 
 import com.patternity.data.annotation.InfraLayer;
 
