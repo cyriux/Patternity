@@ -169,7 +169,7 @@ public class ScannerContext {
         return getFieldVisitor();
     }
 
-    public MethodVisitor enterMethod(MethodModel model) {
+    public MethodVisitor enterMethod(MethodElement model) {
         peekClassModel().addMethod(model);
         push(model);
         return getMethodVisitor();

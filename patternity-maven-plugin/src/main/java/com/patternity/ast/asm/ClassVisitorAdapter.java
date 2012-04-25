@@ -3,7 +3,7 @@ package com.patternity.ast.asm;
 import com.patternity.ast.AnnotationElement;
 import com.patternity.ast.ClassElement;
 import com.patternity.ast.FieldElement;
-import com.patternity.ast.MethodModel;
+import com.patternity.ast.MethodElement;
 import org.objectweb.asm.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +85,7 @@ public class ClassVisitorAdapter implements ClassVisitor {
                                      final String[] exceptions) {
         logger.debug("Visiting class method <{}> <{}>", name, desc);
 
-        MethodModel model = new MethodModel(name);
+        MethodElement model = new MethodElement(name);
         AsmUtils.applyModifiers(model.getModifiers(), access);
 
         MethodVisitor methodVisitor = context.enterMethod(model);

@@ -16,7 +16,7 @@ public class ClassElement extends ModelElement<ClassElement> {
 	private String superQualifiedName;// @Nullable
 	private Set<String> implementQualifiedNames = new HashSet<String>();
 	private List<FieldElement> fieldModels;// @Nullable @LazyInitialization
-	private List<MethodModel> methodModels;// @Nullable @LazyInitialization
+	private List<MethodElement> methodModels;// @Nullable @LazyInitialization
 
 	public ClassElement(String qualifiedName) {
 		this.qualifiedName = qualifiedName;
@@ -38,7 +38,7 @@ public class ClassElement extends ModelElement<ClassElement> {
 			return false;
 		}
 
-		for (MethodModel model : methodModels) {
+		for (MethodElement model : methodModels) {
 			model.traverseModelTree(visitor);
 			if (visitor.isDone())
 				return true;
@@ -110,13 +110,13 @@ public class ClassElement extends ModelElement<ClassElement> {
 		fieldModels.add(model);
 	}
 
-	public List<MethodModel> getMethods() {
+	public List<MethodElement> getMethods() {
 		return listOrEmpty(methodModels);
 	}
 
-	public void addMethod(MethodModel model) {
+	public void addMethod(MethodElement model) {
 		if (methodModels == null)
-			methodModels = new ArrayList<MethodModel>();
+			methodModels = new ArrayList<MethodElement>();
 		methodModels.add(model);
 	}
 
@@ -125,6 +125,23 @@ public class ClassElement extends ModelElement<ClassElement> {
 		if (elements == null)
 			return Collections.emptyList();
 		return elements;
+	}
+
+	@Override
+	public int hashCode() {
+		return qualifiedName.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final ClassElement other = (ClassElement) obj;
+		return qualifiedName.equals(other.qualifiedName);
 	}
 
 	@Override
