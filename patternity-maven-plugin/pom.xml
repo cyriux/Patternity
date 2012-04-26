@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>patternity</groupId>
   <artifactId>patternity-maven-plugin</artifactId>
@@ -7,34 +6,103 @@
   <version>1.0-SNAPSHOT</version>
   <name>patternity-maven-plugin Maven Mojo</name>
   <url>http://maven.apache.org</url>
+
+  <!--  inherit from Sonatype OSS Parent POM -->
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
   
+  <!-- licence definition-->
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
+  <!-- sources repository -->
+  <scm>
+    <connection>scm:git:git@github.com:cyriux/Patternity.git</connection>
+    <developerConnection>scm:git:git@github.com:cyriux/Patternity.git</developerConnection>
+    <url>git@github.com:cyriux/Patternity.git</url>
+  </scm>
+  
+  <properties>
+    <hamcrest.version>1.2.1</hamcrest.version>
+    <slf4j.version>1.6.4</slf4j.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
       <version>2.0</version>
     </dependency>
-    
+
     <!--
+     <dependency>
+     <groupId>bcel</groupId>
+     <artifactId>bcel</artifactId>
+     <version>5.1</version>
+   </dependency>
+   -->
+
     <dependency>
-		<groupId>bcel</groupId>
-		<artifactId>bcel</artifactId>
-		<version>5.1</version>
-	</dependency>
-	-->
-	
-	<dependency>
-		<groupId>asm</groupId>
-		<artifactId>asm-commons</artifactId>
-		<version>3.3.1</version>
-	</dependency>
-            
-            
+      <groupId>asm</groupId>
+      <artifactId>asm-commons</artifactId>
+      <version>3.3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
+
     <dependency>
       <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <!-- allow to define our own hamcrest version
+           see Issue https://github.com/KentBeck/junit/issues/332 -->
+      <artifactId>junit-dep</artifactId>
       <version>4.10</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-library</artifactId>
+      <version>${hamcrest.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-core</artifactId>
+      <version>${hamcrest.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-integration</artifactId>
+      <version>1.2.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>1.9.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
+
 </project>
