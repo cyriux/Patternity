@@ -33,3 +33,5 @@ test-output/
 *.ipr
 *.iws
 .idea
+/.classpath
+/.project
