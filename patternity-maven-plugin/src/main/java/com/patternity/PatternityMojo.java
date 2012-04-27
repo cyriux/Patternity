@@ -58,9 +58,14 @@ public class PatternityMojo extends AbstractMojo {
 	}
 
 	protected Collection<Violation> processClasses() {
-		final File root = new File(outputDirectory, "classes");
 		System.out.println("PatternityMojo verify-dependencies starting...");
-		final List<ClassElement> classes = new ClassesBuilder().parseAll(root);
+		final File root = new File(outputDirectory, "classes");
+		return process(root);
+	}
+
+	public Collection<Violation> process(final File root) {
+		final MetaModel metaModel = new MetaModelBuilder().build(root);
+		System.out.println(metaModel);
 		return Collections.emptyList();
 	}
 

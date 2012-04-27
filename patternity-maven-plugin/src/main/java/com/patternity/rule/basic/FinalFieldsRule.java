@@ -32,7 +32,7 @@ public class FinalFieldsRule implements Rule {
 
 		if (nonFinalFields.length() > 0) {
 			nonFinalFields.setLength(nonFinalFields.length() - 2);
-			context.reportViolation(toString, "The class '" + element.getQualifiedName() + "' has non final fields: "
+			context.reportViolation(this, "The class '" + element.getQualifiedName() + "' has non final fields: "
 					+ nonFinalFields);
 		}
 	}

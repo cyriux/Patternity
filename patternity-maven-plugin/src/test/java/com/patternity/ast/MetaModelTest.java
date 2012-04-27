@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.patternity.MetaModel;
+
 public class MetaModelTest {
 
 	@Test
@@ -15,7 +17,7 @@ public class MetaModelTest {
 		final ClassElement element = new ClassElement(name);
 		final String name2 = name + "2";
 		final ClassElement element2 = new ClassElement(name2);
-		final MetaModel model = new MetaModel(element, element2);
+		final MetaModel model = newMetaModel(element, element2);
 		assertThat(model.findElement(name), equalTo(element));
 		assertThat(model.findElement(name2), equalTo(element2));
 	}
@@ -24,7 +26,7 @@ public class MetaModelTest {
 	public void find_Package() {
 		final String name = "com/patternity/xxx/package-info";
 		final ClassElement element = new ClassElement(name);
-		final MetaModel model = new MetaModel(element);
+		final MetaModel model = newMetaModel(element);
 		assertThat(model.findElement(name), equalTo(element));
 	}
 
@@ -33,7 +35,7 @@ public class MetaModelTest {
 		final String name = "com/patternity/xxx/AnnotatedClass";
 		final String tag = "fr/arolla/xxx/Annotation1";
 		final ClassElement element = newClassElement(name);
-		final MetaModel model = new MetaModel(element);
+		final MetaModel model = newMetaModel(element);
 		assertFalse(model.isMarked(element, tag));
 	}
 
@@ -42,7 +44,7 @@ public class MetaModelTest {
 		final String name = "com.patternity/xxx/AnnotatedClass";
 		final String tag = "fr/arolla/xxx/Annotation1";
 		final ClassElement element = newClassElement(name, tag);
-		final MetaModel model = new MetaModel(element);
+		final MetaModel model = newMetaModel(element);
 		assertTrue(model.isMarked(element, tag));
 	}
 
@@ -51,21 +53,25 @@ public class MetaModelTest {
 		final String packageInfo = "com/patternity/xxx/package-info";
 		final String tag = "fr/arolla/xxx/Annotation1";
 		final ClassElement packageInfoElement = newClassElement(packageInfo, tag);
-		
+
 		final String name = "com/patternity/xxx/ClassInPackage";
 		final ClassElement element = newClassElement(name);
 
-		final MetaModel model = new MetaModel(element, packageInfoElement);
+		final MetaModel model = newMetaModel(element, packageInfoElement);
 		assertTrue(model.isMarked(element, tag));
 	}
-	
+
 	@Test
 	public void class_IsMarked_alias() {
 		final String name = "com.patternity/xxx/AnnotatedClass";
 		final String tag = "fr/arolla/xxx/Annotation1";
 		final ClassElement element = newClassElement(name, tag);
-		final MetaModel model = new MetaModel(element);
+		final MetaModel model = newMetaModel(element);
 		assertTrue(model.isMarked(element, tag));
+	}
+
+	private MetaModel newMetaModel(ClassElement... elements) {
+		return new MapBasedMetaModel(elements);
 	}
 
 	private final static ClassElement newClassElement(final String qName, final String... annotationNames) {

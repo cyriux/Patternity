@@ -39,7 +39,7 @@ public class FinalFieldsRuleTest {
 
 		rule.validate(classModel, context);
 
-		verify(context).reportViolation(eq(rule.toString()), argThat(stringContainsInOrder(asList("uuid"))));
+		verify(context).reportViolation(eq(rule), argThat(stringContainsInOrder(asList("uuid"))));
 	}
 
 	@Test

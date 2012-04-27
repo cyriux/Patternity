@@ -40,7 +40,7 @@ public class ForbiddenStateDependencyRuleTest {
 		when(context.isMarked(same(classModel), same(VALUE_OBJECT))).thenReturn(true);
 
 		rule.validate(classModel, context);
-		verify(context, never()).reportViolation("some rule", "never happened");
+		verify(context, never()).reportViolation(rule, "never happened");
 	}
 
 	@Test
@@ -49,7 +49,7 @@ public class ForbiddenStateDependencyRuleTest {
 		when(context.isMarked(same(classModel), same(VALUE_OBJECT))).thenReturn(true);
 
 		rule.validate(classModel, context);
-		verify(context, never()).reportViolation("some rule", "never happened");
+		verify(context, never()).reportViolation(rule, "never happened");
 	}
 
 	@Test
@@ -60,10 +60,10 @@ public class ForbiddenStateDependencyRuleTest {
 		when(context.isMarked(same(entity), same(ENTITY))).thenReturn(true);
 		when(context.isMarked(same(entity), same(ENTITY))).thenReturn(true);
 
-		when(context.findModel("com/patternity/rule/basic/ForbiddenStateDependencyRuleTest$E1")).thenReturn(entity);
+		when(context.findElement("com/patternity/rule/basic/ForbiddenStateDependencyRuleTest$E1")).thenReturn(entity);
 
 		rule.validate(vo, context);
-		verify(context).reportViolation(eq(rule.toString()), argThat(stringContainsInOrder(asList("ref"))));
+		verify(context).reportViolation(eq(rule), argThat(stringContainsInOrder(asList("ref"))));
 	}
 
 	@Test
@@ -76,11 +76,11 @@ public class ForbiddenStateDependencyRuleTest {
 		when(context.isMarked(same(refEntity), same(ENTITY))).thenReturn(false);
 		when(context.isMarked(same(entity), same(ENTITY))).thenReturn(true);
 
-		when(context.findModel("com/patternity/rule/basic/ForbiddenStateDependencyRuleTest$Ref")).thenReturn(refEntity);
-		when(context.findModel("com/patternity/rule/basic/ForbiddenStateDependencyRuleTest$E1")).thenReturn(entity);
+		when(context.findElement("com/patternity/rule/basic/ForbiddenStateDependencyRuleTest$Ref")).thenReturn(refEntity);
+		when(context.findElement("com/patternity/rule/basic/ForbiddenStateDependencyRuleTest$E1")).thenReturn(entity);
 
 		rule.validate(vo, context);
-		verify(context).reportViolation(eq(rule.toString()), argThat(stringContainsInOrder(asList("ref"))));
+		verify(context).reportViolation(eq(rule), argThat(stringContainsInOrder(asList("ref"))));
 	}
 
 	@ValueObject

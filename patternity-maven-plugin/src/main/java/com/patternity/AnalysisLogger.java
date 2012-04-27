@@ -3,14 +3,18 @@ package com.patternity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.patternity.rule.Rule;
+
 /**
- *
+ * A simple implementation of 
  */
-public class AnalysisLogger {
+@Deprecated
+public class AnalysisLogger implements ViolationReporter {
 
-    private List<String> violations = new ArrayList<String>();
+	private List<Violation> violations = new ArrayList<Violation>();
 
-    public void reportViolation(String rule, String message) {
-        violations.add("[" + rule + "]: " + message);
-    }
+	@Override
+	public void reportViolation(final Rule rule, final String message) {
+		violations.add(new Violation(rule, message));
+	}
 }

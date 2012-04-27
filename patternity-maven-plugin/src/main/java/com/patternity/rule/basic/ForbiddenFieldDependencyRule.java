@@ -37,7 +37,7 @@ public class ForbiddenFieldDependencyRule implements Rule {
 
 		if (forbiddenReferences.length() > 0) {
 			forbiddenReferences.setLength(forbiddenReferences.length() - 2);
-			context.reportViolation(toString, "The class '" + classElement.getQualifiedName()
+			context.reportViolation(this, "The class '" + classElement.getQualifiedName()
 					+ "' has forbidden dependencies: " + forbiddenReferences);
 		}
 	}
@@ -48,7 +48,7 @@ public class ForbiddenFieldDependencyRule implements Rule {
 
 	private final static ClassElement typeOf(FieldElement field, RuleContext context) {
 		for (String qualifiedName : field.getDependencies()) {
-			ClassElement fieldType = context.findModel(qualifiedName);
+			ClassElement fieldType = context.findElement(qualifiedName);
 			return fieldType;
 		}
 		return null;

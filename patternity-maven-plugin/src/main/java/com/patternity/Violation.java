@@ -1,25 +1,32 @@
 package com.patternity;
 
+import com.patternity.rule.Rule;
+
 /**
- * Represents a violation of dependency
- * 
- * @author Mohamed Bourogaa
- * @author Cyrille Martraire
+ * Represents a violation of a rule
  */
 // ValueObject
 public class Violation {
 
-	private final String from;
-	private final String to;
+	private final Rule rule;
+	private final String message;
 
-	public Violation(String from, String to) {
-		this.from = from;
-		this.to = to;
+	public Violation(Rule rule, String message) {
+		this.rule = rule;
+		this.message = message;
+	}
+
+	public Rule getRule() {
+		return rule;
+	}
+
+	public String getMessage() {
+		return message;
 	}
 
 	@Override
 	public String toString() {
-		return "Unallowed dependency from " + from + " to" + to;
+		return "Rule:" + rule + " is violated:" + message;
 	}
 
 }

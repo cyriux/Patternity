@@ -1,13 +1,18 @@
 package com.patternity.rule.basic;
 
-import com.patternity.ast.*;
-import com.patternity.rule.Rule;
-import com.patternity.rule.RuleContext;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.patternity.ast.AnnotationElement;
+import com.patternity.ast.ClassElement;
+import com.patternity.ast.FieldElement;
+import com.patternity.ast.ModelElement;
+import com.patternity.ast.ModelVisitor;
+import com.patternity.rule.Rule;
+import com.patternity.rule.RuleContext;
 
 /**
  * A rule that verifies that classes marked by the 'source' tag must not have
@@ -43,7 +48,7 @@ public class ForbiddenStateDependencyRule implements Rule {
 		}
 		if (invalidFields.length() > 0) {
 			invalidFields.setLength(invalidFields.length() - 2);
-			context.reportViolation(toString, "The value object '" + classModel.getQualifiedName()
+			context.reportViolation(this, "The value object '" + classModel.getQualifiedName()
 					+ "' contains fields that reference directly or indirectly entity: " + invalidFields);
 		}
 	}
@@ -120,7 +125,7 @@ public class ForbiddenStateDependencyRule implements Rule {
 
 		private boolean directDependencyOnEntity(ModelElement<?> element) {
 			for (String qualifiedName : element.getDependencies()) {
-				final ClassElement dependency = context.findModel(qualifiedName);
+				final ClassElement dependency = context.findElement(qualifiedName);
 				if (dependency != null) {
 					enterModel(dependency);
 					if (isDone())

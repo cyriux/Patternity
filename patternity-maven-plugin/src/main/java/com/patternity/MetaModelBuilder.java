@@ -13,6 +13,7 @@ import java.util.List;
 import com.patternity.ast.ClassElement;
 import com.patternity.ast.ClassHandler;
 import com.patternity.ast.ClassScanner;
+import com.patternity.ast.MapBasedMetaModel;
 import com.patternity.ast.asm.AsmScanner;
 import com.patternity.util.Files;
 
@@ -20,7 +21,7 @@ import com.patternity.util.Files;
  * The procesor that walks the files from the root and scans each class to build
  * the metamodel.
  */
-public class ClassesBuilder {
+public class MetaModelBuilder {
 
 	private final List<ClassElement> classes = new ArrayList<ClassElement>();
 	private final ClassHandler handler = new ClassHandler() {
@@ -30,12 +31,12 @@ public class ClassesBuilder {
 		}
 	};
 
-	public List<ClassElement> parseAll(final File root) {
+	public MetaModel build(final File root) {
 		classes.clear();
 		for (File file : new Files(root)) {
 			collect(file);
 		}
-		return classes;
+		return new MapBasedMetaModel(classes);
 	}
 
 	private void collect(File file) {
