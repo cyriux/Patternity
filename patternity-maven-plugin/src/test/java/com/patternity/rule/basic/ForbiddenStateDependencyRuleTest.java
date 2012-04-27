@@ -1,5 +1,6 @@
 package com.patternity.rule.basic;
 
+import static com.patternity.usecase.TestUsecases.scanClass;
 import static java.util.Arrays.asList;
 import static org.hamcrest.text.StringContainsInOrder.stringContainsInOrder;
 import static org.mockito.Matchers.argThat;
@@ -19,7 +20,6 @@ import com.patternity.ast.ClassElement;
 import com.patternity.data.annotation.Entity;
 import com.patternity.data.annotation.ValueObject;
 import com.patternity.rule.RuleContext;
-import com.patternity.usecase.Usecases;
 
 public class ForbiddenStateDependencyRuleTest {
 
@@ -36,7 +36,7 @@ public class ForbiddenStateDependencyRuleTest {
 
 	@Test
 	public void ruleIsVerified_noDependencyNoFields() throws IOException {
-		ClassElement classModel = Usecases.scanClass(VO1_noDependencyNoFields.class);
+		ClassElement classModel = scanClass(VO1_noDependencyNoFields.class);
 		when(context.isMarked(same(classModel), same(VALUE_OBJECT))).thenReturn(true);
 
 		rule.validate(classModel, context);
@@ -45,7 +45,7 @@ public class ForbiddenStateDependencyRuleTest {
 
 	@Test
 	public void ruleIsVerified_noDependency() throws IOException {
-		ClassElement classModel = Usecases.scanClass(VO1_noDependency.class);
+		ClassElement classModel = scanClass(VO1_noDependency.class);
 		when(context.isMarked(same(classModel), same(VALUE_OBJECT))).thenReturn(true);
 
 		rule.validate(classModel, context);
@@ -54,8 +54,8 @@ public class ForbiddenStateDependencyRuleTest {
 
 	@Test
 	public void ruleIsNotVerified_fieldDependency() throws IOException {
-		ClassElement vo = Usecases.scanClass(VO1_withDependencyInField.class);
-		ClassElement entity = Usecases.scanClass(E1.class);
+		ClassElement vo = scanClass(VO1_withDependencyInField.class);
+		ClassElement entity = scanClass(E1.class);
 		when(context.isMarked(same(vo), same(VALUE_OBJECT))).thenReturn(true);
 		when(context.isMarked(same(entity), same(ENTITY))).thenReturn(true);
 		when(context.isMarked(same(entity), same(ENTITY))).thenReturn(true);
@@ -68,9 +68,9 @@ public class ForbiddenStateDependencyRuleTest {
 
 	@Test
 	public void ruleIsNotVerified_indirectFieldDependency() throws IOException {
-		ClassElement vo = Usecases.scanClass(VO1_withDependencyIndirectFieldType.class);
-		ClassElement refEntity = Usecases.scanClass(Ref.class);
-		ClassElement entity = Usecases.scanClass(E1.class);
+		ClassElement vo = scanClass(VO1_withDependencyIndirectFieldType.class);
+		ClassElement refEntity = scanClass(Ref.class);
+		ClassElement entity = scanClass(E1.class);
 
 		when(context.isMarked(same(vo), same(VALUE_OBJECT))).thenReturn(true);
 		when(context.isMarked(same(refEntity), same(ENTITY))).thenReturn(false);

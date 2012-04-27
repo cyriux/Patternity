@@ -5,28 +5,30 @@ package com.patternity.ast;
  */
 public class AnnotationElement extends ModelElement<AnnotationElement> {
 
-    private final String qualifiedName;
-    private final boolean visibleAtRuntime;
+	private final String qualifiedName;
+	private final boolean visibleAtRuntime;
 
-    public AnnotationElement(String qualifiedName, boolean visibleAtRuntime) {
-        this.qualifiedName = qualifiedName;
-        this.visibleAtRuntime = visibleAtRuntime;
-    }
+	public AnnotationElement(String qualifiedName) {
+		this(qualifiedName, false);
+	}
 
-    @Override
-    public ModelType getModelType() {
-        return ModelType.ANNOTATION;
-    }
+	public AnnotationElement(String qualifiedName, boolean visibleAtRuntime) {
+		this.qualifiedName = qualifiedName;
+		this.visibleAtRuntime = visibleAtRuntime;
+	}
 
-    public String getQualifiedName() {
-        return qualifiedName;
-    }
+	@Override
+	public ModelType getModelType() {
+		return ModelType.ANNOTATION;
+	}
 
-    @Override
-    public String toString() {
-        return "AnnotationModel{" +
-                "qualifiedName='" + qualifiedName + '\'' +
-                ", visibleAtRuntime=" + visibleAtRuntime +
-                '}';
-    }
+	public String getQualifiedName() {
+		return qualifiedName;
+	}
+
+	@Override
+	public String toString() {
+		return "AnnotationModel{" + "qualifiedName='" + qualifiedName + '\'' + ", visibleAtRuntime=" + visibleAtRuntime
+				+ '}';
+	}
 }

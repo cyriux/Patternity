@@ -26,7 +26,7 @@ public class ClassVisitorAdapter implements ClassVisitor {
                       final String superName, //
                       final String[] interfaces) {
 
-        logger.info("Visiting class <{}> sig: <{}>", name, signature);
+        logger.debug("Visiting class <{}> sig: <{}>", name, signature);
 
         ClassElement model = new ClassElement(name);
         AsmUtils.applyModifiers(model.getModifiers(), access);

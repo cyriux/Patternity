@@ -2,7 +2,6 @@ package com.patternity.rule.basic;
 
 import com.patternity.ast.ClassElement;
 import com.patternity.ast.FieldElement;
-import com.patternity.ast.ModelRepository;
 import com.patternity.rule.Rule;
 import com.patternity.rule.RuleContext;
 

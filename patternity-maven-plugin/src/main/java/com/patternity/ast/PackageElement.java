@@ -8,6 +8,10 @@ import java.util.List;
 public class PackageElement extends ModelElement<PackageElement> {
 	private final String qualifiedName;
 
+	public PackageElement(final ClassElement classElement) {
+		this(classElement.getQualifiedName(), classElement.getAnnotations());
+	}
+
 	public PackageElement(final String qualifiedName, final List<AnnotationElement> annotations) {
 		this.qualifiedName = qualifiedName;
 		for (AnnotationElement annotation : annotations) {

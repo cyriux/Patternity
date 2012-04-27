@@ -62,6 +62,15 @@ public class ClassElement extends ModelElement<ClassElement> {
 		return qualifiedName;
 	}
 
+	public boolean isPackageInfo() {
+		return qualifiedName.endsWith("package-info");
+	}
+
+	public String getPackageName() {
+		final int index = qualifiedName.lastIndexOf('/');
+		return qualifiedName.substring(0, index);
+	}
+
 	@Override
 	public ModelType getModelType() {
 		return ModelType.CLASS;

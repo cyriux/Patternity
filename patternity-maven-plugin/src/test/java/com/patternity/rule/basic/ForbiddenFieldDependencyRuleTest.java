@@ -1,7 +1,7 @@
 package com.patternity.rule.basic;
 
-import static com.patternity.usecase.Usecases.scanClass;
-import static com.patternity.usecase.Usecases.scanPackage;
+import static com.patternity.usecase.TestUsecases.scanClass;
+import static com.patternity.usecase.TestUsecases.scanPackage;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

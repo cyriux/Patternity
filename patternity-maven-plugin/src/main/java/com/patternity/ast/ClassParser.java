@@ -8,5 +8,5 @@ import java.io.InputStream;
  * the class element built from it
  */
 public interface ClassParser {
-	Iterable<ClassElement> scan(InputStream clazz) throws IOException;
+	ClassElement scan(InputStream clazz) throws IOException;
 }

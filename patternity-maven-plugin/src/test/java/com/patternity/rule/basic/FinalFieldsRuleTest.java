@@ -1,5 +1,6 @@
 package com.patternity.rule.basic;
 
+import static com.patternity.usecase.TestUsecases.scanClass;
 import static java.util.Arrays.asList;
 import static org.hamcrest.text.StringContainsInOrder.stringContainsInOrder;
 import static org.mockito.Matchers.argThat;
@@ -18,7 +19,6 @@ import org.mockito.Mockito;
 import com.patternity.ast.ClassElement;
 import com.patternity.data.annotation.ValueObject;
 import com.patternity.rule.RuleContext;
-import com.patternity.usecase.Usecases;
 
 public class FinalFieldsRuleTest {
 
@@ -34,7 +34,7 @@ public class FinalFieldsRuleTest {
 
 	@Test
 	public void ruleIsNotVerified() throws IOException {
-		ClassElement classModel = Usecases.scanClass(VO1_nonFinalField.class);
+		ClassElement classModel = scanClass(VO1_nonFinalField.class);
 		when(context.isMarked(same(classModel), same(VALUE_OBJECT))).thenReturn(true);
 
 		rule.validate(classModel, context);
@@ -44,7 +44,7 @@ public class FinalFieldsRuleTest {
 
 	@Test
 	public void ruleIsVerified_finalField() throws IOException {
-		ClassElement classModel = Usecases.scanClass(VO2_finalField.class);
+		ClassElement classModel = scanClass(VO2_finalField.class);
 		when(context.isMarked(same(classModel), same(VALUE_OBJECT))).thenReturn(true);
 
 		rule.validate(classModel, context);
@@ -55,7 +55,7 @@ public class FinalFieldsRuleTest {
 
 	@Test
 	public void ruleIsVerified_finalField_nonFinalStatic() throws IOException {
-		ClassElement classModel = Usecases.scanClass(VO3_finalField_nonFinalStatic.class);
+		ClassElement classModel = scanClass(VO3_finalField_nonFinalStatic.class);
 		when(context.isMarked(same(classModel), same(VALUE_OBJECT))).thenReturn(true);
 
 		rule.validate(classModel, context);

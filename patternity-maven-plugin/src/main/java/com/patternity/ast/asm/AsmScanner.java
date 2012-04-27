@@ -2,8 +2,6 @@ package com.patternity.ast.asm;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.objectweb.asm.ClassReader;
 
@@ -28,16 +26,9 @@ public class AsmScanner implements ClassScanner, ClassParser {
 	}
 
 	@Override
-	public Iterable<ClassElement> scan(final InputStream stream) throws IOException {
-		final List<ClassElement> elements = new ArrayList<ClassElement>();
-		final ClassHandler handler = new ClassHandler() {
-
-			@Override
-			public void handleClass(ClassElement element) {
-				elements.add(element);
-			}
-		};
+	public ClassElement scan(final InputStream stream) throws IOException {
+		final SingleClassHandlerCollector handler = new SingleClassHandlerCollector();
 		scan(stream, handler);
-		return elements;
+		return handler.getCollected();
 	}
 }
