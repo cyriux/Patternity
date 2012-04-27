@@ -27,6 +27,10 @@ public class Processor {
 			public void reportViolation(Rule rule, String message) {
 				violations.add(new Violation(rule, message));
 			}
+			@Override
+			public String toString() {
+				return "Processor/ViolationReporter";
+			}
 		};
 		final RuleContext context = new RuleContextMixin(metaModel, reporter);
 		for (ClassElement classElement : metaModel) {

@@ -1,10 +1,7 @@
 package com.patternity;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -13,10 +10,6 @@ import org.apache.maven.plugin.MojoFailureException;
 import com.patternity.annotation.DomainService;
 import com.patternity.annotation.Entity;
 import com.patternity.annotation.ValueObject;
-import com.patternity.ast.ClassElement;
-import com.patternity.rule.Rule;
-import com.patternity.rule.RuleContext;
-import com.patternity.rule.RuleContextMixin;
 import com.patternity.rule.basic.FinalFieldsRule;
 import com.patternity.rule.basic.ForbiddenFieldDependencyRule;
 
@@ -72,9 +65,9 @@ public class PatternityMojo extends AbstractMojo {
 	}
 
 	public RuleBook loadRuleBook() {
-		final String vo = ValueObject.class.toString();
-		final String entity = Entity.class.toString();
-		final String service = DomainService.class.toString();
+		final String vo = "com/patternity/annotation/ValueObject";
+		final String entity = "com/patternity/annotation/Entity";
+		final String service = "com/patternity/annotation/Service";
 		final ForbiddenFieldDependencyRule vo2entity = new ForbiddenFieldDependencyRule(vo, entity);
 		final ForbiddenFieldDependencyRule vo2service = new ForbiddenFieldDependencyRule(vo, service);
 		final FinalFieldsRule voHazFinalFields = new FinalFieldsRule(vo);

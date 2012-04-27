@@ -37,7 +37,7 @@ public class MapBasedMetaModel implements MetaModel {
 		}
 		if (element instanceof ClassElement) {
 			final ClassElement classElement = (ClassElement) element;
-			return isPackageMarked(classElement, tag);
+			return classElement.isPackageInfo() ? false : isPackageMarked(classElement, tag);
 		}
 		return false;
 	}

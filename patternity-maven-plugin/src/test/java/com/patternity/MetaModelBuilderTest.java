@@ -21,7 +21,7 @@ public class MetaModelBuilderTest {
 
 		// fragile
 		assertThat(metaModel.size(), OrderingComparison.greaterThan(75));
-		assertThat(metaModel.findElement("com/patternity/rule/basic/ForbiddenStateDependencyRule$1"), notNullValue());
+		assertThat(metaModel.findElement("com/patternity/rule/basic/ForbiddenStateDependencyRule"), notNullValue());
 		assertThat(metaModel.findElement("com/patternity/ast/package-info"), notNullValue());
 	}
 
