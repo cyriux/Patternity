@@ -37,7 +37,7 @@ public class FinalFieldsRuleTest {
 		ClassElement classModel = scanClass(VO1_nonFinalField.class);
 		when(context.isMarked(same(classModel), same(VALUE_OBJECT))).thenReturn(true);
 
-		rule.validate(classModel, context);
+		rule.verify(classModel, context);
 
 		verify(context).reportViolation(eq(rule), argThat(stringContainsInOrder(asList("uuid"))));
 	}
@@ -47,7 +47,7 @@ public class FinalFieldsRuleTest {
 		ClassElement classModel = scanClass(VO2_finalField.class);
 		when(context.isMarked(same(classModel), same(VALUE_OBJECT))).thenReturn(true);
 
-		rule.validate(classModel, context);
+		rule.verify(classModel, context);
 
 		verify(context).isMarked(same(classModel), same(VALUE_OBJECT));
 		verifyNoMoreInteractions(context);
@@ -58,7 +58,7 @@ public class FinalFieldsRuleTest {
 		ClassElement classModel = scanClass(VO3_finalField_nonFinalStatic.class);
 		when(context.isMarked(same(classModel), same(VALUE_OBJECT))).thenReturn(true);
 
-		rule.validate(classModel, context);
+		rule.verify(classModel, context);
 
 		verify(context).isMarked(same(classModel), same(VALUE_OBJECT));
 		verifyNoMoreInteractions(context);

@@ -51,7 +51,7 @@ public class ForbiddenFieldDependencyRuleTest {
 		when(context.findElement("com/patternity/data/infra/JdbcEpicRepository")).thenReturn(repo);
 		when(context.isMarked(same(repo), same("InfraLayer"))).thenReturn(true);
 
-		rule.validate(epic6, context);
+		rule.verify(epic6, context);
 		verify(context).reportViolation(eq(rule),
 				argThat(stringContainsInOrder(asList("has forbidden dependencies"))));
 

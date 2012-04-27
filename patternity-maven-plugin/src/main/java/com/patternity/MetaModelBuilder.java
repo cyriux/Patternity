@@ -13,7 +13,6 @@ import java.util.List;
 import com.patternity.ast.ClassElement;
 import com.patternity.ast.ClassHandler;
 import com.patternity.ast.ClassScanner;
-import com.patternity.ast.MapBasedMetaModel;
 import com.patternity.ast.asm.AsmScanner;
 import com.patternity.util.Files;
 

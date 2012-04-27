@@ -1,10 +1,12 @@
-package com.patternity.ast;
+package com.patternity;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-import com.patternity.MetaModel;
+import com.patternity.ast.ClassElement;
+import com.patternity.ast.ModelElement;
 
 /**
  * A very simple metamodel implementation
@@ -49,6 +51,11 @@ public class MapBasedMetaModel implements MetaModel {
 		return findElement(classElement.getPackageName() + "/package-info");
 	}
 
+	@Override
+	public Iterator<ClassElement> iterator() {
+		return classes.values().iterator();
+	}
+
 	public int size() {
 		return classes.size();
 	}
@@ -57,4 +64,5 @@ public class MapBasedMetaModel implements MetaModel {
 	public String toString() {
 		return "MetaModel: " + size() + " classes";
 	}
+
 }

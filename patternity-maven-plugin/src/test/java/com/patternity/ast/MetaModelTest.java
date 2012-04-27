@@ -1,5 +1,6 @@
 package com.patternity.ast;
 
+import static com.patternity.ast.ClassElementTest.newClassElement;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
@@ -7,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.patternity.MapBasedMetaModel;
 import com.patternity.MetaModel;
 
 public class MetaModelTest {
@@ -72,14 +74,6 @@ public class MetaModelTest {
 
 	private MetaModel newMetaModel(ClassElement... elements) {
 		return new MapBasedMetaModel(elements);
-	}
-
-	private final static ClassElement newClassElement(final String qName, final String... annotationNames) {
-		final ClassElement element = new ClassElement(qName);
-		for (String annotationName : annotationNames) {
-			element.addAnnotation(new AnnotationElement(annotationName));
-		}
-		return element;
 	}
 
 }

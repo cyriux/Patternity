@@ -39,7 +39,7 @@ public class ForbiddenStateDependencyRuleTest {
 		ClassElement classModel = scanClass(VO1_noDependencyNoFields.class);
 		when(context.isMarked(same(classModel), same(VALUE_OBJECT))).thenReturn(true);
 
-		rule.validate(classModel, context);
+		rule.verify(classModel, context);
 		verify(context, never()).reportViolation(rule, "never happened");
 	}
 
@@ -48,7 +48,7 @@ public class ForbiddenStateDependencyRuleTest {
 		ClassElement classModel = scanClass(VO1_noDependency.class);
 		when(context.isMarked(same(classModel), same(VALUE_OBJECT))).thenReturn(true);
 
-		rule.validate(classModel, context);
+		rule.verify(classModel, context);
 		verify(context, never()).reportViolation(rule, "never happened");
 	}
 
@@ -62,7 +62,7 @@ public class ForbiddenStateDependencyRuleTest {
 
 		when(context.findElement("com/patternity/rule/basic/ForbiddenStateDependencyRuleTest$E1")).thenReturn(entity);
 
-		rule.validate(vo, context);
+		rule.verify(vo, context);
 		verify(context).reportViolation(eq(rule), argThat(stringContainsInOrder(asList("ref"))));
 	}
 
@@ -79,7 +79,7 @@ public class ForbiddenStateDependencyRuleTest {
 		when(context.findElement("com/patternity/rule/basic/ForbiddenStateDependencyRuleTest$Ref")).thenReturn(refEntity);
 		when(context.findElement("com/patternity/rule/basic/ForbiddenStateDependencyRuleTest$E1")).thenReturn(entity);
 
-		rule.validate(vo, context);
+		rule.verify(vo, context);
 		verify(context).reportViolation(eq(rule), argThat(stringContainsInOrder(asList("ref"))));
 	}
 

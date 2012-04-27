@@ -1,9 +1,6 @@
 package com.patternity;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,10 +10,15 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import com.patternity.annotation.DomainService;
+import com.patternity.annotation.Entity;
+import com.patternity.annotation.ValueObject;
 import com.patternity.ast.ClassElement;
-import com.patternity.ast.ClassHandler;
-import com.patternity.ast.ClassScanner;
-import com.patternity.ast.asm.AsmScanner;
+import com.patternity.rule.Rule;
+import com.patternity.rule.RuleContext;
+import com.patternity.rule.RuleContextMixin;
+import com.patternity.rule.basic.FinalFieldsRule;
+import com.patternity.rule.basic.ForbiddenFieldDependencyRule;
 
 /**
  * Goal to verify allowed dependencies.
@@ -60,13 +62,23 @@ public class PatternityMojo extends AbstractMojo {
 	protected Collection<Violation> processClasses() {
 		System.out.println("PatternityMojo verify-dependencies starting...");
 		final File root = new File(outputDirectory, "classes");
-		return process(root);
-	}
 
-	public Collection<Violation> process(final File root) {
 		final MetaModel metaModel = new MetaModelBuilder().build(root);
 		System.out.println(metaModel);
-		return Collections.emptyList();
+
+		final RuleBook ruleBook = loadRuleBook();
+		System.out.println(ruleBook);
+		return new Processor(ruleBook).process(metaModel);
+	}
+
+	public RuleBook loadRuleBook() {
+		final String vo = ValueObject.class.toString();
+		final String entity = Entity.class.toString();
+		final String service = DomainService.class.toString();
+		final ForbiddenFieldDependencyRule vo2entity = new ForbiddenFieldDependencyRule(vo, entity);
+		final ForbiddenFieldDependencyRule vo2service = new ForbiddenFieldDependencyRule(vo, service);
+		final FinalFieldsRule voHazFinalFields = new FinalFieldsRule(vo);
+		return new RuleBook(vo2entity, vo2service, voHazFinalFields);
 	}
 
 	@Override

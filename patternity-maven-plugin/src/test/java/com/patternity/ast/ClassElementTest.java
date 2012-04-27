@@ -20,4 +20,12 @@ public class ClassElementTest {
 		assertTrue(new ClassElement("com/patternity/xxx/package-info").isPackageInfo());
 		assertFalse(new ClassElement("com/patternity/xxx/MyClass").isPackageInfo());
 	}
+	
+	public final static ClassElement newClassElement(final String qName, final String... annotationNames) {
+		final ClassElement element = new ClassElement(qName);
+		for (String annotationName : annotationNames) {
+			element.addAnnotation(new AnnotationElement(annotationName));
+		}
+		return element;
+	}
 }

@@ -19,7 +19,7 @@ public class FinalFieldsRule implements Rule {
 	}
 
 	@Override
-	public void validate(ClassElement element, RuleContext context) {
+	public void verify(ClassElement element, RuleContext context) {
 		if (!isElligibleToRule(element, context))
 			return;
 

@@ -23,7 +23,7 @@ public class ForbiddenFieldDependencyRule implements Rule {
 	}
 
 	@Override
-	public void validate(ClassElement classElement, RuleContext context) {
+	public void verify(ClassElement classElement, RuleContext context) {
 		if (!isElligible(classElement, context))
 			return;
 

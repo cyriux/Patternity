@@ -35,7 +35,7 @@ public class ForbiddenStateDependencyRule implements Rule {
 	}
 
 	@Override
-	public void validate(ClassElement classModel, RuleContext context) {
+	public void verify(ClassElement classModel, RuleContext context) {
 		if (!isElligible(classModel, context))
 			return;
 
