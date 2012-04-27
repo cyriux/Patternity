@@ -1,5 +1,7 @@
 package com.patternity.rule.basic;
 
+import static com.patternity.usecase.Usecases.scanClass;
+import static com.patternity.usecase.Usecases.scanPackage;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,7 +23,6 @@ import com.patternity.ast.PackageElement;
 import com.patternity.data.domain.Epic6KnowsItsInfra;
 import com.patternity.data.infra.JdbcEpicRepository;
 import com.patternity.rule.RuleContext;
-import com.patternity.usecase.Usecases;
 
 public class ForbiddenFieldDependencyRuleTest {
 
@@ -35,7 +36,7 @@ public class ForbiddenFieldDependencyRuleTest {
 
 	@Test
 	public void scanPackageInfo() throws IOException {
-		final PackageElement packageElement = Usecases.scanPackage(this.getClass());
+		final PackageElement packageElement = scanPackage(this.getClass());
 		assertThat(packageElement.getQualifiedName(), equalTo("com/patternity/rule/basic/package-info"));
 		assertThat(packageElement.getAnnotations().get(0).getQualifiedName(),
 				equalTo("com/patternity/data/annotation/InfraLayer"));
@@ -43,8 +44,8 @@ public class ForbiddenFieldDependencyRuleTest {
 
 	@Test
 	public void ruleIsViolated() throws IOException {
-		final ClassElement epic6 = Usecases.scanClass(Epic6KnowsItsInfra.class);
-		final ClassElement repo = Usecases.scanClass(JdbcEpicRepository.class);
+		final ClassElement epic6 = scanClass(Epic6KnowsItsInfra.class);
+		final ClassElement repo = scanClass(JdbcEpicRepository.class);
 
 		when(context.isMarked(same(epic6), same("MyDomainModel"))).thenReturn(true);
 		when(context.findModel("com/patternity/data/infra/JdbcEpicRepository")).thenReturn(repo);
