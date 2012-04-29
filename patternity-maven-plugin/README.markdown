@@ -9,5 +9,5 @@ $ mvn -P-verify clean install
 Once plugin is installed in your local repository, you can rely on the default build:
 
 ```bash
-$ masvn clean install
+$ svn clean install
 ```
