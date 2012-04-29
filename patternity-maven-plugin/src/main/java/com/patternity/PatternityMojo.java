@@ -35,32 +35,31 @@ public class PatternityMojo extends AbstractMojo {
 	private File outputDirectory;
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		System.out.println("PatternityMojo verify-dependencies starting...");
+        getLog().info("PatternityMojo verify-dependencies starting...");
 		final Collection<Violation> violations = processClasses();
 		if (!violations.isEmpty()) {
 			printViolations(violations);
 			throw new MojoFailureException(violations.toString());
 		}
-		System.out.println("PatternityMojo verify-dependencies done.");
+        getLog().info("PatternityMojo verify-dependencies done.");
 	}
 
 	private void printViolations(final Collection<Violation> violations) {
-		System.err.println("PatternityMojo verify-dependencies found " + violations.size() + " violations: "
-				+ violations);
+        getLog().error("PatternityMojo verify-dependencies found " + violations.size() + " violations");
 		for (Violation violation : violations) {
-			System.err.println(violation);
+            getLog().error(violation.toString());
 		}
 	}
 
 	protected Collection<Violation> processClasses() {
-		System.out.println("PatternityMojo verify-dependencies starting...");
+        getLog().info("PatternityMojo verify-dependencies starting...");
 		final File root = new File(outputDirectory, "classes");
 
 		final MetaModel metaModel = new MetaModelBuilder().build(root);
-		System.out.println(metaModel);
+        getLog().info(metaModel.toString());
 
 		final RuleBook ruleBook = loadRuleBook();
-		System.out.println(ruleBook);
+        getLog().info(ruleBook.toString());
 		return new Processor(ruleBook).process(metaModel);
 	}
 
