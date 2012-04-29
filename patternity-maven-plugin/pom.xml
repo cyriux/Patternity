@@ -41,6 +41,7 @@
 	</developers>
 	
 	<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hamcrest.version>1.2.1</hamcrest.version>
 		<slf4j.version>1.6.4</slf4j.version>
 	</properties>
@@ -109,22 +110,35 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-
-			<plugin>
-				<groupId>patternity</groupId>
-				<artifactId>patternity-maven-plugin</artifactId>
-				<version>1.0-SNAPSHOT</version>
-				<executions>
-					<execution>
-						<phase>test</phase>
-						<goals>
-							<goal>verify-dependencies</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-		</plugins>
 	</build>
+
+  <profiles>
+    <profile>
+      <!-- Define a dedicated profile to 'verify'
+           thus it is possible to build the plugin
+           at least once!
+        -->
+      <id>verify</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>patternity</groupId>
+            <artifactId>patternity-maven-plugin</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <executions>
+              <execution>
+                <phase>test</phase>
+                <goals>
+                  <goal>verify-dependencies</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
