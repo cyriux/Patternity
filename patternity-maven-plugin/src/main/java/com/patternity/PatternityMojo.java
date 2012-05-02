@@ -7,6 +7,12 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import com.patternity.annotation.DomainService;
+import com.patternity.annotation.Entity;
+import com.patternity.annotation.ValueObject;
+import com.patternity.rule.basic.FinalFieldsRule;
+import com.patternity.rule.basic.ForbiddenFieldDependencyRule;
+
 /**
  * Goal to verify allowed dependencies.
  * 
@@ -20,8 +26,6 @@ import org.apache.maven.plugin.MojoFailureException;
  */
 public class PatternityMojo extends AbstractMojo {
 
-	private final static String DEFAULT_RULE = "com.patternity.annotation.ValueObject->com.patternity.annotation.Entity";
-
 	/**
 	 * Location of the file.
 	 * 
@@ -31,15 +35,42 @@ public class PatternityMojo extends AbstractMojo {
 	private File outputDirectory;
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		System.out.println("PatternityMojo verify-dependencies starting...");
+        getLog().info("PatternityMojo verify-dependencies starting...");
 		final Collection<Violation> violations = processClasses();
 		if (!violations.isEmpty()) {
+			printViolations(violations);
 			throw new MojoFailureException(violations.toString());
+		}
+        getLog().info("PatternityMojo verify-dependencies done.");
+	}
+
+	private void printViolations(final Collection<Violation> violations) {
+        getLog().error("PatternityMojo verify-dependencies found " + violations.size() + " violations");
+		for (Violation violation : violations) {
+            getLog().error(violation.toString());
 		}
 	}
 
 	protected Collection<Violation> processClasses() {
-		return new DependencyVerifier(DEFAULT_RULE).verifyDependencies(new File(outputDirectory, "classes"));
+        getLog().info("PatternityMojo verify-dependencies starting...");
+		final File root = new File(outputDirectory, "classes");
+
+		final MetaModel metaModel = new MetaModelBuilder().build(root);
+        getLog().info(metaModel.toString());
+
+		final RuleBook ruleBook = loadRuleBook();
+        getLog().info(ruleBook.toString());
+		return new Processor(ruleBook).process(metaModel);
+	}
+
+	public RuleBook loadRuleBook() {
+		final String vo = "com/patternity/annotation/ValueObject";
+		final String entity = "com/patternity/annotation/Entity";
+		final String service = "com/patternity/annotation/Service";
+		final ForbiddenFieldDependencyRule vo2entity = new ForbiddenFieldDependencyRule(vo, entity);
+		final ForbiddenFieldDependencyRule vo2service = new ForbiddenFieldDependencyRule(vo, service);
+		final FinalFieldsRule voHazFinalFields = new FinalFieldsRule(vo);
+		return new RuleBook(vo2entity, vo2service, voHazFinalFields);
 	}
 
 	@Override

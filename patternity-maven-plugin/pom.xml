@@ -7,7 +7,11 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>patternity-maven-plugin Maven Mojo</name>
 	<url>http://maven.apache.org</url>
-
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -39,8 +43,9 @@
 			<email>mohamed.bourogaa@arolla.fr</email>
 		</developer>
 	</developers>
-	
+
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hamcrest.version>1.2.1</hamcrest.version>
 		<slf4j.version>1.6.4</slf4j.version>
 	</properties>
@@ -109,22 +114,33 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-
-			<plugin>
-				<groupId>patternity</groupId>
-				<artifactId>patternity-maven-plugin</artifactId>
-				<version>1.0-SNAPSHOT</version>
-				<executions>
-					<execution>
-						<phase>test</phase>
-						<goals>
-							<goal>verify-dependencies</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<!-- Define a dedicated profile to 'verify' thus it is possible to build 
+				the plugin at least once! -->
+			<id>verify</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>${project.groupId}</groupId>
+						<artifactId>${project.artifactId}</artifactId>
+						<version>${project.version}</version>
+						<executions>
+							<execution>
+								<phase>test</phase>
+								<goals>
+									<goal>verify-dependencies</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
