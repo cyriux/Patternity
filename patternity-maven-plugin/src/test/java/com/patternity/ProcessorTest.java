@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.patternity.annotation.AcceptanceTests;
+import com.patternity.annotation.testing.AcceptanceTests;
 import com.patternity.ast.ClassElement;
 import com.patternity.ast.FieldElement;
 import com.patternity.data.annotation.Entity;

@@ -20,7 +20,7 @@ public class MetaModelBuilderTest {
 		System.out.println("scanned " + metaModel.size() + " classes");
 
 		// fragile
-		assertThat(metaModel.size(), OrderingComparison.greaterThan(75));
+		assertThat(metaModel.size(), OrderingComparison.greaterThan(43));
 		assertThat(metaModel.findElement("com/patternity/rule/basic/ForbiddenStateDependencyRule"), notNullValue());
 		assertThat(metaModel.findElement("com/patternity/ast/package-info"), notNullValue());
 	}

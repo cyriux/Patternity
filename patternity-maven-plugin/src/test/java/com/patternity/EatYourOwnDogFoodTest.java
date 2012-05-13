@@ -12,8 +12,8 @@ import com.patternity.rule.basic.ForbiddenFieldDependencyRule;
 
 public class EatYourOwnDogFoodTest {
 
-	private static final String MIXIN = "com/patternity/annotation/Mixin";
-	private static final String VALUE_OBJECT = "com/patternity/annotation/ValueObject";
+	private static final String MIXIN = "com/patternity/annotation/designpattern/Mixin";
+	private static final String VALUE_OBJECT = "com/patternity/annotation/ddd/stereotype/ValueObject";
 	private static final ForbiddenFieldDependencyRule FORBIDDEN_MIXIN_2_VO = new ForbiddenFieldDependencyRule(MIXIN,
 			VALUE_OBJECT);
 

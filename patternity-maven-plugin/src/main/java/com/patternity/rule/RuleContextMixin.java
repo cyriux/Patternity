@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import com.patternity.MetaModel;
 import com.patternity.ViolationReporter;
-import com.patternity.annotation.Mixin;
+import com.patternity.annotation.designpattern.Mixin;
 import com.patternity.ast.ClassElement;
 import com.patternity.ast.ModelElement;
 

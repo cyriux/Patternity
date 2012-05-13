@@ -7,9 +7,6 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import com.patternity.annotation.DomainService;
-import com.patternity.annotation.Entity;
-import com.patternity.annotation.ValueObject;
 import com.patternity.rule.basic.FinalFieldsRule;
 import com.patternity.rule.basic.ForbiddenFieldDependencyRule;
 

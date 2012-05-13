@@ -59,6 +59,13 @@
       <version>2.0</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.patternity</groupId>
+      <artifactId>patternity-annotations</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+
     <!-- <dependency> <groupId>bcel</groupId> <artifactId>bcel</artifactId>
        <version>5.1</version> </dependency> -->
 

@@ -1,6 +1,6 @@
 package com.patternity;
 
-import com.patternity.annotation.ValueObject;
+import com.patternity.annotation.ddd.stereotype.ValueObject;
 import com.patternity.ast.ClassElement;
 import com.patternity.ast.ModelElement;
 

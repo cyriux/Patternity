@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.patternity.annotation.Composite;
+import com.patternity.annotation.designpattern.Composite;
 import com.patternity.ast.ClassElement;
 import com.patternity.rule.Rule;
 import com.patternity.rule.RuleContext;
