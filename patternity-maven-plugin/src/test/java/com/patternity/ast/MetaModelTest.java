@@ -54,21 +54,13 @@ public class MetaModelTest {
 	public void class_IsPackageMarked() {
 		final String packageInfo = "com/patternity/xxx/package-info";
 		final String tag = "fr/arolla/xxx/Annotation1";
-		final ClassElement packageInfoElement = newClassElement(packageInfo, tag);
+		final ClassElement packageInfoElement = newClassElement(packageInfo,
+				tag);
 
 		final String name = "com/patternity/xxx/ClassInPackage";
 		final ClassElement element = newClassElement(name);
 
 		final MetaModel model = newMetaModel(element, packageInfoElement);
-		assertTrue(model.isMarked(element, tag));
-	}
-
-	@Test
-	public void class_IsMarked_alias() {
-		final String name = "com.patternity/xxx/AnnotatedClass";
-		final String tag = "fr/arolla/xxx/Annotation1";
-		final ClassElement element = newClassElement(name, tag);
-		final MetaModel model = newMetaModel(element);
 		assertTrue(model.isMarked(element, tag));
 	}
 
