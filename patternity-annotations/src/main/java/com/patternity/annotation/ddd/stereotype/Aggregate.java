@@ -22,4 +22,15 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 public @interface Aggregate {
 
+	/**
+	 * The Entity class that is the root of this aggregate; a class declared
+	 * here is assumed to be an Entity
+	 */
+	Class<?> root();
+
+	/**
+	 * Every Entity class that is part of this aggregate; every class declared
+	 * here is assumed to an Entity
+	 */
+	Class<?>[] memberEntities() default {};
 }

@@ -6,18 +6,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Marks the instance as following the Builder pattern to helps construct other
- * instances "products" step by step.
- * 
- * @see <a href="http://en.wikipedia.org/wiki/Builder_pattern">Builder Pattern
- *      (Wikipedia)</a>
+ * Declares that this class is a companion utility for another class or class
+ * family or hierarchy, just like java.util.Collections is a companion utility
+ * for every Collection class.
  * 
  * @author Cyrille.Martraire
  */
 @Retention(RetentionPolicy.CLASS)
 @Inherited
 @Documented
-public @interface Builder {
+public @interface CompanionUtility {
 
 	Class<?>[] value() default {};
 }

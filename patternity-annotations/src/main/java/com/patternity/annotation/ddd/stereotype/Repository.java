@@ -15,6 +15,7 @@ import java.lang.annotation.RetentionPolicy;
  * objects.
  * 
  * @see <a href="http://martinfowler.com/eaaDev/repository.html">Repository</a>
+ * @see Aggregate
  * 
  * @author Cyrille.Martraire
  */
