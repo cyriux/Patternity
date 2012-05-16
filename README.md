@@ -25,9 +25,11 @@ It is just a Maven plugin to add to your pom.
 
 Roadmap
 -------
+We use [trello] for our roadmap, and [ideascale] to nurture ideas before they reach the roadmap; don't hesitate to join and contribute!
 
-Patternity wants to provide a comprehensive set of predefined annotations and their associated rules and tooling, that can then be extended with your own.
-
+Continuous Integration
+----------------------
+Our continuous integration server is a [jenkins] thanks to [cloudbees]
 
 License
 -------
@@ -40,4 +42,7 @@ Please feel free to contribute and use it.
 
 [logo]: https://github.com/cyriux/Patternity/raw/master/logo.png
 [website]: https://github.com/cyriux/Patternity
-
+[trello]: https://trello.com/b/WU8weVd0
+[ideascale]: http://patternity.ideascale.com/
+[jenkins]: https://patternity.ci.cloudbees.com
+[cloudbees]: http://www.cloudbees.com/
