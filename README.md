@@ -27,6 +27,10 @@ Roadmap
 -------
 We use [trello] for our roadmap, and [ideascale] to nurture ideas before they reach the roadmap; don't hesitate to join and contribute!
 
+Continuous Integration
+----------------------
+Our continuous integration server is a [jenkins] thanks to [cloudbees]
+
 License
 -------
 
@@ -40,3 +44,5 @@ Please feel free to contribute and use it.
 [website]: https://github.com/cyriux/Patternity
 [trello]: https://trello.com/b/WU8weVd0
 [ideascale]: http://patternity.ideascale.com/
+[jenkins]: https://patternity.ci.cloudbees.com
+[cloudbees]: http://www.cloudbees.com/
