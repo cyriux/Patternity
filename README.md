@@ -25,9 +25,7 @@ It is just a Maven plugin to add to your pom.
 
 Roadmap
 -------
-
-Patternity provides a comprehensive set of predefined annotations and their associated rules and tooling, that can also be extended with your own.
-
+We use [trello] for our roadmap, and [ideascale] to nurture ideas before they reach the roadmap; don't hesitate to join and contribute!
 
 License
 -------
@@ -40,4 +38,5 @@ Please feel free to contribute and use it.
 
 [logo]: https://github.com/cyriux/Patternity/raw/master/logo.png
 [website]: https://github.com/cyriux/Patternity
-
+[trello]: https://trello.com/b/WU8weVd0
+[ideascale]: http://patternity.ideascale.com/
