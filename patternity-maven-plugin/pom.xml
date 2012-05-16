@@ -6,51 +6,12 @@
   <packaging>maven-plugin</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>patternity-maven-plugin Maven Mojo</name>
-  <url>http://maven.apache.org</url>
-
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
+  
+ <parent>
+    <groupId>com.patternity</groupId>
+    <artifactId>patternity-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
   </parent>
-
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-
-  <scm>
-    <connection>scm:git:git@github.com:cyriux/patternity.git</connection>
-    <developerConnection>scm:git:git@github.com:cyriux/patternity.git</developerConnection>
-    <url>git@github.com:cyriux/patternity.git</url>
-  </scm>
-
-  <developers>
-    <developer>
-      <id>cyriux</id>
-      <name>Cyrille MARTRAIRE</name>
-      <email>cyrille.martraire@arolla.fr</email>
-    </developer>
-    <developer>
-      <id>arnauld</id>
-      <name>Arnauld LOYER</name>
-      <email>arnauld.loyer@arolla.fr</email>
-    </developer>
-    <developer>
-      <id>bourogaam</id>
-      <name>Mohamed BOUROGAA</name>
-      <email>mohamed.bourogaa@arolla.fr</email>
-    </developer>
-  </developers>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <hamcrest.version>1.2.1</hamcrest.version>
-    <slf4j.version>1.6.4</slf4j.version>
-  </properties>
 
   <dependencies>
     <dependency>
@@ -92,7 +53,7 @@
       <groupId>junit</groupId>
       <!-- allow to define our own hamcrest version see Issue https://github.com/KentBeck/junit/issues/332 -->
       <artifactId>junit-dep</artifactId>
-      <version>4.10</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -117,7 +78,7 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
-      <version>1.9.0</version>
+      <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
