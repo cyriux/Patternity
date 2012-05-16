@@ -26,7 +26,7 @@ It is just a Maven plugin to add to your pom.
 Roadmap
 -------
 
-Patternity wants to provide a comprehensive set of predefined annotations and their associated rules and tooling, that can then be extended with your own.
+Patternity provides a comprehensive set of predefined annotations and their associated rules and tooling, that can also be extended with your own.
 
 
 License
