@@ -9,9 +9,10 @@
   <url>http://maven.apache.org</url>
 
   <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
+    <groupId>com.patternity</groupId>
+    <artifactId>patternity-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../patternity-parent/pom.xml</relativePath>
   </parent>
 
   <licenses>

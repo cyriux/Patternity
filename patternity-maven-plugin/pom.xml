@@ -11,6 +11,7 @@
     <groupId>com.patternity</groupId>
     <artifactId>patternity-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <relativePath>../patternity-parent/pom.xml</relativePath>
   </parent>
 
   <dependencies>
